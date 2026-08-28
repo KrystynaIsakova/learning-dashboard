@@ -1,1 +1,26 @@
+# Credentials
 .env
+
+# Virtual environments
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Editors and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated data
+data/clean/*.csv
+data/rejected/*.csv
+
+# Generated reports
+reports/*.md
