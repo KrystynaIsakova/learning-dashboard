@@ -18,6 +18,7 @@ data/
 │   └── payments.csv
 └── rejected/
     └── payments_unknown_user.csv
+```
 
 Сирі таблиці в PostgreSQL змінювати не можна.
 
