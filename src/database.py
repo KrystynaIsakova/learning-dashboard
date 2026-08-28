@@ -3,7 +3,7 @@
 import os
 
 from dotenv import load_dotenv
-from sqlalchemy import Engine, create_engine, text
+from sqlalchemy import Engine, create_engine, event, text
 
 
 def get_engine() -> Engine:
@@ -19,10 +19,20 @@ def get_engine() -> Engine:
             "Create a .env file based on .env.example."
         )
 
-    return create_engine(
+    engine = create_engine(
         database_url,
         pool_pre_ping=True,
     )
+
+    # Every transaction is marked read-only, so a stray write fails at the
+    # server. This is done per transaction rather than per session: pooled Neon
+    # endpoints reject the startup "options" parameter and may hand a session
+    # setting to a different backend, so only a transaction-scoped SET holds.
+    @event.listens_for(engine, "begin")
+    def _enforce_read_only(connection):
+        connection.exec_driver_sql("SET TRANSACTION READ ONLY")
+
+    return engine
 
 
 def test_connection(engine: Engine | None = None) -> None:
