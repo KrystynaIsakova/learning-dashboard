@@ -16,3 +16,16 @@ EXPECTED_RAW_ROWS = {
     "enrollments": 94_705,
     "payments": 87_924,
 }
+
+
+# docs/cleaning_rules.md, section 4.
+EXPECTED_CLEAN_ROWS = {
+    "users": 40_000,
+    "enrollments": 94_686,
+    "payments": 87_884,
+}
+
+EXPECTED_REJECTED_ROWS = {
+    "enrollments_certified_without_completion": 19,
+    "payments_unknown_user": 40,
+}
